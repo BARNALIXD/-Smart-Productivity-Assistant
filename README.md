@@ -1,6 +1,8 @@
 # Smart Productivity Assistant
 
 A comprehensive personal productivity hub that combines tasks, notes, schedule management, and AI-powered task recommendations.
+<img width="1919" height="892" alt="image" src="https://github.com/user-attachments/assets/e2be7de2-b433-4628-ac15-7438cc950361" />
+
 
 ## Features
 
