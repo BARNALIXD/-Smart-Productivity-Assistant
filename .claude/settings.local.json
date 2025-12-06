@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(java:*)",
+      "Bash(mvn -version:*)",
+      "Bash(where:*)",
+      "Bash(psql:*)",
+      "Bash(pg_ctl:*)",
+      "Bash(docker-compose down:*)",
+      "Bash(docker logs:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

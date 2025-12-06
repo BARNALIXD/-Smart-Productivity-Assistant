@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Productivity Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Smart Productivity Assistant</h1>
+            <div class="user-info">
+                <span id="currentDate"></span>
+                <select id="userSelect" class="user-selector">
+                    <option value="1">User 1</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Recommended Tasks Section -->
+            <section class="card recommended-section">
+                <div class="card-header">
+                    <h2>Recommended Next Tasks</h2>
+                    <span class="badge">AI Powered</span>
+                </div>
+                <div id="recommendedTasks" class="task-list"></div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section class="card calendar-section">
+                <div class="card-header">
+                    <h2>Today's Schedule</h2>
+                    <button onclick="refreshCalendar()" class="btn-icon">&#x21bb;</button>
+                </div>
+                <div id="calendarEvents" class="event-list"></div>
+            </section>
+
+            <!-- All Tasks Section -->
+            <section class="card tasks-section">
+                <div class="card-header">
+                    <h2>All Tasks</h2>
+                    <button onclick="showAddTaskModal()" class="btn-primary">+ Add Task</button>
+                </div>
+                <div class="task-filters">
+                    <button class="filter-btn active" onclick="filterTasks('all')">All</button>
+                    <button class="filter-btn" onclick="filterTasks('TODO')">To Do</button>
+                    <button class="filter-btn" onclick="filterTasks('IN_PROGRESS')">In Progress</button>
+                    <button class="filter-btn" onclick="filterTasks('COMPLETED')">Completed</button>
+                </div>
+                <div id="allTasks" class="task-list"></div>
+            </section>
+
+            <!-- Notes Section -->
+            <section class="card notes-section">
+                <div class="card-header">
+                    <h2>Quick Notes</h2>
+                    <button onclick="showAddNoteModal()" class="btn-primary">+ Add Note</button>
+                </div>
+                <div class="notes-search">
+                    <input type="text" id="noteSearch" placeholder="Search notes..." onkeyup="searchNotes()">
+                </div>
+                <div id="notesList" class="notes-list"></div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="card stats-section">
+                <div class="card-header">
+                    <h2>Productivity Stats</h2>
+                </div>
+                <div id="stats" class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalTasks">0</div>
+                        <div class="stat-label">Total Tasks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="completedTasks">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="overdueTasks">0</div>
+                        <div class="stat-label">Overdue</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalNotes">0</div>
+                        <div class="stat-label">Notes</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTaskModal()">&times;</span>
+            <h2>Add New Task</h2>
+            <form id="taskForm" onsubmit="submitTask(event)">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="taskDescription" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="taskPriority">
+                            <option value="LOW">Low</option>
+                            <option value="MEDIUM" selected>Medium</option>
+                            <option value="HIGH">High</option>
+                            <option value="URGENT">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Estimated Duration (min)</label>
+                        <input type="number" id="taskDuration" min="5" step="5">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Due Date</label>
+                    <input type="datetime-local" id="taskDueDate">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" onclick="closeTaskModal()" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeNoteModal()">&times;</span>
+            <h2>Add New Note</h2>
+            <form id="noteForm" onsubmit="submitNote(event)">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="noteTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="noteContent" rows="6"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Tags (comma separated)</label>
+                    <input type="text" id="noteTags" placeholder="work, personal, ideas">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="notePinned">
+                        Pin this note
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" onclick="closeNoteModal()" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Note</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
